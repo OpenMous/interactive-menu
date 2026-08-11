@@ -47,7 +47,7 @@ function fmenu (
 			else
 				fcolores $5 $e
 			fi
-		else
+		elif [ $pos -eq 4 ];then
 			if [ $sit -eq 5 ];then
 				fcolores $1 = = = = = = = =
 				fcolores $6 $e
@@ -70,15 +70,21 @@ while true;do
 
 	#Moverse por el menu
 	while true;do
+		# Array que guarda los argumentos (colores) y se reinicia cada que te mueves por el menú
 		declare -a args=(30)
 
+		# Contador que incluye al array argumentos (default 33) tantos como opciones - 1 haya
 		for ((i=1; i<${#opcs[@]}; i++)); do
 			args+=(33)
 		done
+		##
 
+		# Se añade un ultimo que correspondera al color rojo para la ultima opcion que es la de salir
 		args+=(31)
+		# Dependiendo el valor de $sit (donde estes en el menú) sustituira el 33 correspondiente con un 44
 		args[$sit]=44
 
+		# Llama a la funcion del menú con todos los argumentos
 		fmenu "${args[@]}"
 
 		#Lee sin mostrar lo que se escribe y solo una tecla
