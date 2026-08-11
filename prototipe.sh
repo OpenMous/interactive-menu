@@ -11,49 +11,41 @@ function fmenu (
 	for e in ${opcs[@]};do
 		if [ $pos -eq 0 ];then
 			if [ $sit -eq 1 ];then
-				fcolores $7 = = = = = = = =
-				fcolores $1 $e
-				fcolores $7 = = = = = = = =
+				fcolores $1 = = = = = = = =
+				fcolores $2 $e
+				fcolores $1 = = = = = = = =
 			else
-				fcolores $1 $e
+				fcolores $2 $e
 			fi
 		elif [ $pos -eq 1 ];then
 			if [ $sit -eq 2 ];then
-				fcolores $7 = = = = = = = =
-				fcolores $2 $e
-				fcolores $7 = = = = = = = =
+				fcolores $1 = = = = = = = =
+				fcolores $3 $e
+				fcolores $1 = = = = = = = =
 			else
-				fcolores $2 $e
+				fcolores $3 $e
 			fi
 		elif [ $pos -eq 2 ];then
 			if [ $sit -eq 3 ];then
-				fcolores $7 = = = = = = = =
-				fcolores $3 $e
-				fcolores $7 = = = = = = = =
+				fcolores $1 = = = = = = = =
+				fcolores $4 $e
+				fcolores $1 = = = = = = = =
 			else
-				fcolores $3 $e
+				fcolores $4 $e
 			fi
 		elif [ $pos -eq 3 ];then
 			if [ $sit -eq 4 ];then
-				fcolores $7 = = = = = = = =
-				fcolores $4 $e
-				fcolores $7 = = = = = = = =
-			else
-				fcolores $4 $e
-			fi
-		elif [ $pos -eq 4 ];then
-			if [ $sit -eq 5 ];then
-				fcolores $7 = = = = = = = =
+				fcolores $1 = = = = = = = =
 				fcolores $5 $e
-				fcolores $7 = = = = = = = =
+				fcolores $1 = = = = = = = =
 			else
 				fcolores $5 $e
 			fi
 		else
-			if [ $sit -eq 6 ];then
-				fcolores $7 = = = = = = = =
+			if [ $sit -eq 5 ];then
+				fcolores $1 = = = = = = = =
 				fcolores $6 $e
-				fcolores $7 = = = = = = = =
+				fcolores $1 = = = = = = = =
 			else
 				fcolores $6 $e
 			fi
@@ -74,29 +66,28 @@ while true;do
 	while true;do
 		case $sit in
 			1)
-			fmenu 44 33 33 33 31 33 30
+			fmenu 30 44 33 33 33 31 33
 			;;
 			2)
-			fmenu 33 44 33 33 31 33 30
+			fmenu 30 33 44 33 33 31 33
 			;;
 			3)
-			fmenu 33 33 44 33 31 33 30
+			fmenu 30 33 33 44 33 31 33
 			;;
 			4)
-			fmenu 33 33 33 44 31 33 30
+			fmenu 30 33 33 33 44 31 33
 			;;
 			5)
-			fmenu 33 33 33 33 44 33 30
+			fmenu 30 33 33 33 33 44 33
 			;;
 			6)
-			fmenu 33 33 33 33 31 44 30
-			;;
+			fmenu 30 33 33 33 33 31 44 
+			;; 
 		esac
 		#Lee sin mostrar lo que se escribe y solo una tecla
 		read -s -n 1 tecla
 		#Si le das a enter elige esa opcion
 		if [ -z $tecla ];then
-			op=$sit
 			break
 		##
 		#Si pulsas w subes en el menu poniendo como limite la primera opcion
