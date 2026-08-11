@@ -7,53 +7,31 @@ function fcolores (
 declare -a opcs=("Ver_Usuarios" "Crear_Usuario" "Modificar_Usuario" "Borrar_Usuarios" "Volcar_y_Salir")
 
 function fmenu (
-	pos=0
-	for e in ${opcs[@]};do
-		if [ $pos -eq 0 ];then
-			if [ $sit -eq 1 ];then
-				fcolores $1 = = = = = = = =
-				fcolores $2 $e
-				fcolores $1 = = = = = = = =
-			else
-				fcolores $2 $e
-			fi
-		elif [ $pos -eq 1 ];then
-			if [ $sit -eq 2 ];then
-				fcolores $1 = = = = = = = =
-				fcolores $3 $e
-				fcolores $1 = = = = = = = =
-			else
-				fcolores $3 $e
-			fi
-		elif [ $pos -eq 2 ];then
-			if [ $sit -eq 3 ];then
-				fcolores $1 = = = = = = = =
-				fcolores $4 $e
-				fcolores $1 = = = = = = = =
-			else
-				fcolores $4 $e
-			fi
-		elif [ $pos -eq 3 ];then
-			if [ $sit -eq 4 ];then
-				fcolores $1 = = = = = = = =
-				fcolores $5 $e
-				fcolores $1 = = = = = = = =
-			else
-				fcolores $5 $e
-			fi
-		elif [ $pos -eq 4 ];then
-			if [ $sit -eq 5 ];then
-				fcolores $1 = = = = = = = =
-				fcolores $6 $e
-				fcolores $1 = = = = = = = =
-			else
-				fcolores $6 $e
-			fi
+	# Variable sit temporal que se reinicia cada que te mueves por el menu
+	sit_temp=1
+
+	# Para cada opcion nos quedamos con su indice en el array indexado
+	for i in "${!opcs[@]}"; do
+		# Nos quedamos con la opcion correspondiente (texto)
+		e="${opcs[$i]}"
+		# Aumentamos la variable temporal porque es necesario para que se muestren los colores correctamente
+		((sit_temp++))
+
+		# Si el indice de la opcion es igual a la variable sit -1 significa que estas "seleccionando" esa opcion
+		# (Ha resultado curioso que la posicion en el array siempre sea el valor de sit-1 en este caso)
+		if  [ $i = $(($sit-1)) ]; then
+			fcolores $1 = = = = = = = =
+			fcolores ${!sit_temp} $e
+			fcolores $1 = = = = = = = =
+		##
+		# Si no es igual entonces no mostramos los "espacios"
+		else
+			fcolores ${!sit_temp} $e
 		fi
-		pos=$(($pos+1))
+		##
+
 	done
 )
-##
 
 sit=1
 
@@ -62,7 +40,7 @@ while true;do
 	tput civis
 	##
 
-	#Moverse por el menu
+	#Moverse por el menueval "fcolores ${'$sit_temp'} $e"
 	while true;do
 		# Array que guarda los argumentos (colores) y se reinicia cada que te mueves por el menú
 		declare -a args=(30)
@@ -115,7 +93,7 @@ while true;do
 	#Muestra de nuevo el cursor en la terminal
 	tput cnorm
 	##
-    	#La opcion 5 es salir
+    #La opcion 5 es salir
 	if [ $sit -eq 5 ];then
 		break
 	##
