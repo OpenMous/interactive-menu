@@ -1,0 +1,144 @@
+#!/bin/bash
+
+function fcolores (
+	echo -e "\e[${1}m${@:2}\e[0m"
+)
+
+declare -a opcs=("Ver_Usuarios" "Crear_Usuario" "Modificar_Usuario" "Borrar_Usuarios" "Volcar_y_Salir")
+
+function fmenu (
+	pos=0
+	for e in ${opcs[@]};do
+		if [ $pos -eq 0 ];then
+			if [ $sit -eq 1 ];then
+				fcolores $7 = = = = = = = =
+				fcolores $1 $e
+				fcolores $7 = = = = = = = =
+			else
+				fcolores $1 $e
+			fi
+		elif [ $pos -eq 1 ];then
+			if [ $sit -eq 2 ];then
+				fcolores $7 = = = = = = = =
+				fcolores $2 $e
+				fcolores $7 = = = = = = = =
+			else
+				fcolores $2 $e
+			fi
+		elif [ $pos -eq 2 ];then
+			if [ $sit -eq 3 ];then
+				fcolores $7 = = = = = = = =
+				fcolores $3 $e
+				fcolores $7 = = = = = = = =
+			else
+				fcolores $3 $e
+			fi
+		elif [ $pos -eq 3 ];then
+			if [ $sit -eq 4 ];then
+				fcolores $7 = = = = = = = =
+				fcolores $4 $e
+				fcolores $7 = = = = = = = =
+			else
+				fcolores $4 $e
+			fi
+		elif [ $pos -eq 4 ];then
+			if [ $sit -eq 5 ];then
+				fcolores $7 = = = = = = = =
+				fcolores $5 $e
+				fcolores $7 = = = = = = = =
+			else
+				fcolores $5 $e
+			fi
+		else
+			if [ $sit -eq 6 ];then
+				fcolores $7 = = = = = = = =
+				fcolores $6 $e
+				fcolores $7 = = = = = = = =
+			else
+				fcolores $6 $e
+			fi
+		fi
+		pos=$(($pos+1))
+	done
+)
+##
+
+sit=1
+
+while true;do
+	#Oculta el cursor en la terminal
+	tput civis
+	##
+
+	#Moverse por el menu
+	while true;do
+		case $sit in
+			1)
+			fmenu 44 33 33 33 31 33 30
+			;;
+			2)
+			fmenu 33 44 33 33 31 33 30
+			;;
+			3)
+			fmenu 33 33 44 33 31 33 30
+			;;
+			4)
+			fmenu 33 33 33 44 31 33 30
+			;;
+			5)
+			fmenu 33 33 33 33 44 33 30
+			;;
+			6)
+			fmenu 33 33 33 33 31 44 30
+			;;
+		esac
+		#Lee sin mostrar lo que se escribe y solo una tecla
+		read -s -n 1 tecla
+		#Si le das a enter elige esa opcion
+		if [ -z $tecla ];then
+			op=$sit
+			break
+		##
+		#Si pulsas w subes en el menu poniendo como limite la primera opcion
+		elif [ $tecla = "w" ];then
+			if [ $sit -eq 1 ];then
+				sit=1
+			else
+				sit=$(($sit-1))
+			fi
+		##
+		#Si pulsas s bajas en el menu poniendo como limite la ultima opcion
+		elif [ $tecla = "s" ];then
+			if [ $sit -eq 5 ];then
+				sit=5
+			else
+				sit=$((sit+1))
+			fi
+		##
+		#Si pulsas cualquier otra tecla pues no hace nada
+		else
+			sit=$sit
+		fi
+		##
+		clear
+	done
+	##
+
+	#Muestra de nuevo el cursor en la terminal
+	tput cnorm
+	##
+    	#La opcion 5 es salir
+	if [ $sit -eq 5 ];then
+		break
+	##
+	#Si no pues te pregunta si quieres hacer algo mas o no
+	else
+		read -p "¿Deseas algo mas (S/n)? " emp
+		if [ -z $emp ] || [ $emp = "s" ] || [ $emp = "S" ];then
+			clear
+		else
+			break
+		fi
+	fi
+	##
+done
