@@ -4,13 +4,7 @@ function fcolores (
 	echo -e "\e[${1}m${@:2}\e[0m"
 )
 
-col_def=33
-
 declare -a opcs=("Ver_Usuarios" "Crear_Usuario" "Modificar_Usuario" "Borrar_Usuarios" "Volcar_y_Salir")
-
-echo "-----------------"
-echo Hay ${#opcs[@]} opciones
-echo "-----------------"
 
 function fmenu (
 	pos=0
@@ -103,8 +97,8 @@ while true;do
 		##
 		#Si pulsas s bajas en el menu poniendo como limite la ultima opcion
 		elif [ $tecla = "s" ];then
-			if [ $sit -eq 5 ];then
-				sit=5
+			if [ $sit -eq ${#opcs[@]} ];then
+				sit=${#opcs[@]}
 			else
 				sit=$((sit+1))
 			fi
