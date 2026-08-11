@@ -40,7 +40,7 @@ while true;do
 	tput civis
 	##
 
-	#Moverse por el menueval "fcolores ${'$sit_temp'} $e"
+	#Moverse por el menu
 	while true;do
 		# Array que guarda los argumentos (colores) y se reinicia cada que te mueves por el menú
 		declare -a args=(30)
