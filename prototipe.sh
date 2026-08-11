@@ -4,7 +4,13 @@ function fcolores (
 	echo -e "\e[${1}m${@:2}\e[0m"
 )
 
+col_def=33
+
 declare -a opcs=("Ver_Usuarios" "Crear_Usuario" "Modificar_Usuario" "Borrar_Usuarios" "Volcar_y_Salir")
+
+echo "-----------------"
+echo Hay ${#opcs[@]} opciones
+echo "-----------------"
 
 function fmenu (
 	pos=0
@@ -64,26 +70,17 @@ while true;do
 
 	#Moverse por el menu
 	while true;do
-		case $sit in
-			1)
-			fmenu 30 44 33 33 33 31 33
-			;;
-			2)
-			fmenu 30 33 44 33 33 31 33
-			;;
-			3)
-			fmenu 30 33 33 44 33 31 33
-			;;
-			4)
-			fmenu 30 33 33 33 44 31 33
-			;;
-			5)
-			fmenu 30 33 33 33 33 44 33
-			;;
-			6)
-			fmenu 30 33 33 33 33 31 44 
-			;; 
-		esac
+		declare -a args=(30)
+
+		for ((i=1; i<${#opcs[@]}; i++)); do
+			args+=(33)
+		done
+
+		args+=(31)
+		args[$sit]=44
+
+		fmenu "${args[@]}"
+
 		#Lee sin mostrar lo que se escribe y solo una tecla
 		read -s -n 1 tecla
 		#Si le das a enter elige esa opcion
