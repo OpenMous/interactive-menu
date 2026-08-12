@@ -1,10 +1,10 @@
 #!/bin/bash
 
-function fcolores (
+function fcolores ( # Función plantilla para colorear el "prompt"
 	echo -e "\e[${1}m${@:2}\e[0m"
 )
 
-declare -a opcs=("Ver_Usuarios" "Crear_Usuario" "Modificar_Usuario" "Borrar_Usuarios" "Volcar_y_Salir")
+declare -a opcs=("Ver_Usuarios" "Crear_Usuario" "Modificar_Usuario" "Borrar_Usuarios" "Volcar_y_Salir") # Array de opciones
 
 function fmenu (
 	# Variable sit temporal que se reinicia cada que te mueves por el menu
