@@ -1,103 +1,75 @@
 #!/bin/bash
-
-function fcolores ( # Función plantilla para colorear el "prompt"
+# Script prototipo para generar menus automaticamente by | AntonioOA1206 & mosto
+# Funciones
+function plantilla_prompt ( # Función plantilla para colorear el "prompt"
 	echo -e "\e[${1}m${@:2}\e[0m"
 )
-
-declare -a opcs=("Ver_Usuarios" "Crear_Usuario" "Modificar_Usuario" "Borrar_Usuarios" "Volcar_y_Salir") # Array de opciones
-
-function fmenu (
-	# Variable sit temporal que se reinicia cada que te mueves por el menu
-	sit_temp=1
-
-	# Para cada opcion nos quedamos con su indice en el array indexado
-	for i in "${!opcs[@]}"; do
-		# Nos quedamos con la opcion correspondiente (texto)
-		e="${opcs[$i]}"
-		# Aumentamos la variable temporal porque es necesario para que se muestren los colores correctamente
-		((sit_temp++))
-
-		# Si el indice de la opcion es igual a la variable sit -1 significa que estas "seleccionando" esa opcion
-		# (Ha resultado curioso que la posicion en el array siempre sea el valor de sit-1 en este caso)
-		if  [ $i = $(($sit-1)) ]; then
-			fcolores $1 = = = = = = = =
-			fcolores ${!sit_temp} $e
-			fcolores $1 = = = = = = = =
-		##
+##
+function print_menu ( # Función que colorea el menú
+	posicion_print=1
+	for i in "${!opciones[@]}"; do
+		opcion="${opciones[$i]}"
+		((posicion_print++))
+		# Si el indice de la opcion es igual a la variable posicion_menu -1 significa que estas "seleccionando" esa opcion
+		if  [ $i = $(($posicion_menu-1)) ]; then
+			plantilla_prompt $1 = = = = = = = =
+			plantilla_prompt ${!posicion_print} $opcion
+			plantilla_prompt $1 = = = = = = = =
 		# Si no es igual entonces no mostramos los "espacios"
 		else
-			fcolores ${!sit_temp} $e
+			plantilla_prompt ${!posicion_print} $opcion
 		fi
-		##
-
 	done
 )
-
-sit=1
-
-while true;do
-	#Oculta el cursor en la terminal
-	tput civis
+##
+# Variables
+posicion_menu=1
+# Array de opciones
+declare -a opciones=("Ver_Usuarios" "Crear_Usuario" "Modificar_Usuario" "Borrar_Usuarios" "Volcar_y_Salir")
+# Menú interactivo
+while true; do
+	tput civis # Oculta el cursor en la terminal
 	##
-
-	#Moverse por el menu
-	while true;do
+	while true; do
 		# Array que guarda los argumentos (colores) y se reinicia cada que te mueves por el menú
-		declare -a args=(30)
-
-		# Contador que incluye al array argumentos (default 33) tantos como opciones - 1 haya
-		for ((i=1; i<${#opcs[@]}; i++)); do
-			args+=(33)
+		declare -a argumentos=(30) # Argumento 30 = cadena de iguales (======)
+		# Contador que incluye al array argumentos tantos como opciones -1 haya
+		for ((i=1; i<${#opciones[@]}; i++)); do
+			argumentos+=(33) # Argumento 33 = Opción del menú
 		done
+		argumentos+=(31) # Argumento 31 = Opción de salir del menú (rojo)
+		argumentos[$posicion_menu]=44 # Argumento 44 = Opción seleccionada 
 		##
-
-		# Se añade un ultimo que correspondera al color rojo para la ultima opcion que es la de salir
-		args+=(31)
-		# Dependiendo el valor de $sit (donde estes en el menú) sustituira el 33 correspondiente con un 44
-		args[$sit]=44
-
-		# Llama a la funcion del menú con todos los argumentos
-		fmenu "${args[@]}"
-
-		#Lee sin mostrar lo que se escribe y solo una tecla
-		read -s -n 1 tecla
-		#Si le das a enter elige esa opcion
-		if [ -z $tecla ];then
+		print_menu "${argumentos[@]}"
+		read -s -n 1 tecla # Imput del teclado para mover el menú (WS)
+		##
+		if [ -z $tecla ]; then # Enter
 			break
 		##
-		#Si pulsas w subes en el menu poniendo como limite la primera opcion
-		elif [ $tecla = "w" ];then
-			if [ $sit -eq 1 ];then
-				sit=1
+		elif [ $tecla = "w" ]; then # W
+			if [ $posicion_menu -eq 1 ];then
+				posicion_menu=1
 			else
-				sit=$(($sit-1))
+				posicion_menu=$(($posicion_menu-1))
 			fi
 		##
-		#Si pulsas s bajas en el menu poniendo como limite la ultima opcion
-		elif [ $tecla = "s" ];then
-			if [ $sit -eq ${#opcs[@]} ];then
-				sit=${#opcs[@]}
+		elif [ $tecla = "s" ]; then # S
+			if [ $posicion_menu -eq ${#opciones[@]} ];then
+				posicion_menu=${#opciones[@]}
 			else
-				sit=$((sit+1))
+				posicion_menu=$((posicion_menu+1))
 			fi
 		##
-		#Si pulsas cualquier otra tecla pues no hace nada
 		else
-			sit=$sit
+			posicion_menu=$posicion_menu
 		fi
 		##
 		clear
 	done
-	##
-
-	#Muestra de nuevo el cursor en la terminal
 	tput cnorm
 	##
-    #La opcion 5 es salir
-	if [ $sit -eq 5 ];then
+	if [ $posicion_menu -eq 5 ]; then # Opción para salir
 		break
-	##
-	#Si no pues te pregunta si quieres hacer algo mas o no
 	else
 		read -p "¿Deseas algo mas (S/n)? " emp
 		if [ -z $emp ] || [ $emp = "s" ] || [ $emp = "S" ];then
