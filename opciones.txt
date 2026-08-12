@@ -1,2 +1,6 @@
-Ver_Usuarios
-Volcar_y_Salir
+Visualizar usuarios introducidos
+Visualizar los datos del usuario
+Crar un usuario
+Borrar un usuario
+Crar todos los usuario
+Salir
