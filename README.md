@@ -1,11 +1,13 @@
-Working progress proyect for a bash script that makes interactive menus for your bash scripts
+# Interactive Menu Module
 
-Cambios: 
-1. Se a refactorizado el script para ser entendible por un ser humano, añadiendo comentarios y cambiado nombres de variables.
-2. Se ha cambiado el script para que las opciones del menu a crear se añadan mediante un .txt externo pre ejecución o durante la ejecución.
+This project is a module for implementing interactive menus in terminal tools and shell programs.
 
-Idea de mejora: 
+## How it works
 
-Hacer que el script en si cree un fichero ejecutable con toda la estructura lista para poder importar el menu a tu programa con las opciones que determines.
+You register the options you want to display in your menu in an array used by the `interactive_menu` function. When you use it in your program, it automatically generates an interactive terminal menu that you can navigate using your keyboard.
 
-De esta manera, el script pasaría a crear un módulo de menu-interactivo listo que definiría un valor en una variable determinada por cada opción para poder introducir en un case.
+Once an option is selected, the menu disappears and the chosen option is stored in a variable, allowing you to use it in the rest of your program.
+
+## Purpose
+
+This project was created to make it easy to add `interactive_menu` functionality to scripts developed by **AntonioOA1206** and **OpenMous** without having to reimplement the same code repeatedly (or remember how it works every time it needs to be adapted).
