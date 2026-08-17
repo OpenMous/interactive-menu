@@ -9,8 +9,7 @@
 declare -a options=("1. First option" "2. Second option" "3. Third option" "4. Quit") 
 ##
 # Funtions
-function cursor-fix( # Funtion to avoid not showing your cursor when you stop the program with CTRL + C
-	
+function cursor-fix( # Function to avoid not showing your cursor when you stop the program with CTRL + C
 	echo ""
 	echo "(Press ENTER to quit)"
 	tput cnorm
