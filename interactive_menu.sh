@@ -1,7 +1,7 @@
 #!/bin/bash
 # Bash script/module for a universal interactive menu for bash scripting | AntonioOA1206 & OpenMosto
 ##
-# This script will create an interactive menu were you can choose between options with W S keys in the terminal.
+# This script will create an interactive menu were you can choose between options with W S keys or with the arrows in the terminal.
 # You will only have to change the options in the options array with the all options you want your menu to have.
 # The last option is build to always be the "Quit" option
 ##
@@ -51,7 +51,7 @@ interactive_menu() {
 			##
 			print_menu "${arguments[@]}"
 			trap cursor-fix SIGINT
-			read -s -n 1 key # Read the keyboard imput (WS)
+			read -s -n 1 key # Read the keyboard imput (WS or up and down arrows)
 			##
 			if [ -z $key ]; then # Enter
 				break
@@ -67,6 +67,26 @@ interactive_menu() {
 				else
 					menu_position=$((menu_position+1))
 				fi
+			elif [[ $key == $'\x1b' ]]; then # Arrow imput (Escape ANSI secuence)
+				read -rsn2 arrow
+				case $arrow in
+					"[A")
+						 # Up arrow
+						if [ $menu_position -eq 1 ]; then
+							menu_position=1
+						else
+							menu_position=$(($menu_position-1))
+						fi
+						;;
+					"[B")
+						 # Down arrow
+						if [ $menu_position -eq ${#options[@]} ]; then
+							menu_position=${#options[@]}
+						else
+							menu_position=$((menu_position+1))
+						fi
+						;;
+				esac
 			else
 				menu_position=$menu_position
 			fi
