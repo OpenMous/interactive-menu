@@ -9,6 +9,14 @@
 declare -a options=("1. First option" "2. Second option" "3. Third option" "4. Quit") 
 ##
 # Funtions
+function cursor-fix( # Funtion to avoid not showing your cursor when you stop the program with CTRL + C
+	
+	echo ""
+	echo "(Press ENTER to quit)"
+	tput cnorm
+	exit 0
+)
+##
 function prompt_template ( # Sets the structure for highlighting the options.
 	echo -e "\e[${1}m${@:2}\e[0m"
 )
@@ -43,6 +51,7 @@ interactive_menu() {
 			arguments[$menu_position]=44 # Argument 44 = Highlighted option
 			##
 			print_menu "${arguments[@]}"
+			trap cursor-fix SIGINT
 			read -s -n 1 key # Read the keyboard imput (WS)
 			##
 			if [ -z $key ]; then # Enter
