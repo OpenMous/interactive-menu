@@ -4,9 +4,20 @@ This project is a module for implementing interactive menus in terminal tools an
 
 ## How it works
 
-You register the options you want to display in your menu in an array used by the `interactive_menu` function. When you use it in your program, it automatically generates an interactive terminal menu that you can navigate using your keyboard.
+This script will display an interactive menu were you can choose between options with W S keys or with the arrow keys in the terminal.
 
-Once an option is selected, the menu disappears and the chosen option is stored in a variable, allowing you to use it in the rest of your program.
+You just have to import the script on your own script or program and use the funtion "interactive-menu" followed by the options you want your menu to have as arguments.
+
+## Example
+
+~~~
+source ./interactive_menu
+interactive_menu "1. Option" "2. Option" "3. Option" "4. Quit"
+~~~
+
+Once an option is selected, the menu disappears and the chosen option is stored in the variable "menu_option", allowing you to use it in the rest of your program.
+
+The last option is build to always be the "Quit" option, and will end the program instantly.
 
 ## Purpose
 

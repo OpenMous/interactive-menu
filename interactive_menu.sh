@@ -1,12 +1,12 @@
 #!/bin/bash
-# Bash script/module for a universal interactive menu for bash scripting | AntonioOA1206 & OpenMosto
+# Bash script module for a universal interactive menu | AntonioOA1206 & OpenMosto | v2.0
 ##
-# This script will create an interactive menu were you can choose between options with W S keys or with the arrows in the terminal.
-# You will only have to change the options in the options array with the all options you want your menu to have.
-# The last option is build to always be the "Quit" option
+# This script will display an interactive menu were you can choose between options with W S keys or with the arrows in the terminal.
+# You can import this on your script or program and use the funtion "interactive-menu" followed by a the options you want your menu to have as arguments.
 ##
-# Options array, change it with the options you want using the same structure
-declare -a options=("1. First option" "2. Second option" "3. Third option" "4. Quit") 
+# Example : interactive_menu "1. Option" "2. Option" "3. Option" "4. Quit"
+## 
+# The last option is build to always be the "Quit" option, and will end the program instantly. 
 ##
 # Funtions
 function cursor-fix( # Function to avoid not showing your cursor when you stop the program with CTRL + C
@@ -35,8 +35,9 @@ function print_menu ( # Prints every iteration of the menu with te selected opti
 	done
 )
 ##
-menu_position=1
 interactive_menu() {
+	menu_position=1
+	declare -a options=("$@") 
 	while true; do
 		tput civis # Hides the terminal cursor
 		##
@@ -102,3 +103,9 @@ interactive_menu() {
 		##
 	done
 }
+
+## Testing
+interactive_menu "1. Option" "2. Option" "3. Option" "4. Quit"
+echo $menu_option
+
+
