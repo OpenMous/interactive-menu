@@ -6,7 +6,7 @@
 ##
 # Example : interactive_menu "1. Option" "2. Option" "3. Option" "4. Quit"
 ## 
-# The last option is build to always be the "Quit" option, and will end the program instantly. 
+# The last option is build to always be the "Quit" option, and will end the program instantly unless you use the -b (or --break) option. 
 ##
 # Funtions
 function cursor-fix( # Function to avoid not showing your cursor when you stop the program with CTRL + C
@@ -37,11 +37,20 @@ function print_menu ( # Prints every iteration of the menu with te selected opti
 ##
 interactive_menu() {
 	menu_position=1
-	declare -a options=("$@") 
-	while true; do
+	##
+	declare -a options=()
+	for arg in "$@"; do # Build the array of options and search for the break switch
+		if [[ "$arg" != "-b" ]] && [[ "$arg" != "--break" ]]; then
+			options+=("$arg")
+		elif [[ "$arg" == "-b" ]] || [[ "$arg" == "--break" ]]; then
+			quit_option="break"
+		fi
+	done
+	##
+	while true; do # Menu loop
 		tput civis # Hides the terminal cursor
 		##
-		while true; do
+		while true; do # Menu print loop
 			# Array that saves the menu arguments, resets every time you move trough the menu. This arguments represent each a color.
 			declare -a arguments=(30) # Argument 30 = equals chain (======)
 			for ((i=1; i<${#options[@]}; i++)); do
@@ -95,17 +104,16 @@ interactive_menu() {
 		done
 		tput cnorm
 		if [ $menu_position -eq ${#options[@]} ]; then # Quit option
-			exit 0 # This will shutdown the script, change it to "break" if you only want to quit the menu
-        else
+			if [[ "$quit_option" == "break" ]]; then # This will only end the menu loop
+				menu_option=$menu_position
+				break
+			else
+				exit 0 # This will shutdown the script without doing anything else
+			fi
+        else # Any other option	
             menu_option=$menu_position # This will set the option you chosen. Its value is the position of the option in order.
             break
         fi
 		##
 	done
 }
-
-## Testing
-interactive_menu "1. Option" "2. Option" "3. Option" "4. Quit"
-echo $menu_option
-
-
