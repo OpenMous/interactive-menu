@@ -8,7 +8,7 @@ This script will display an interactive menu were you can choose between options
 
 You just have to import the script on your own script or program and use the funtion `interactive-menu` followed by the options you want your menu to have as arguments.
 
-# Example
+### Example
 
 ~~~
 source ./interactive_menu
@@ -19,7 +19,7 @@ Once an option is selected, the menu disappears and the chosen option is stored 
 
 The last option is build to always be the "Quit" option, and will end the program instantly unless you use the -b (or --break) option.
 
-# Example 
+### Example 
 
 ~~~
 source ./interactive_menu
