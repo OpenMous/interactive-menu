@@ -4,17 +4,16 @@
 # This script will display an interactive menu were you can choose between options with W S keys or with the arrows in the terminal.
 # You can import this on your script or program and use the funtion "interactive-menu" followed by a the options you want your menu to have as arguments.
 ##
-# Example : interactive_menu "1. Option" "2. Option" "3. Option" "4. Quit"
+# Example: interactive_menu "1. Option" "2. Option" "3. Option" "4. Quit"
 ## 
+# The selected option will define the variable "menu_option" with its position for the programer to then refer to it (for example, option 1 will define the variable with the number 1)
 # The last option is build to always be the "Quit" option, and will end the program instantly unless you use the -b (or --break) option. 
 ##
 # Funtions
-function cursor-fix( # Function to avoid not showing your cursor when you stop the program with CTRL + C
-	echo ""
-	echo "(Press ENTER to quit)"
+cursor-fix() { # Function to avoid not showing your cursor when you stop the program with CTRL + C
 	tput cnorm
 	exit 0
-)
+}
 ##
 function prompt_template ( # Sets the structure for highlighting the options.
 	echo -e "\e[${1}m${@:2}\e[0m"
