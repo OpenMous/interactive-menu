@@ -20,7 +20,7 @@ function prompt_template ( # Sets the structure for highlighting the options.
 )
 ##
 function print_menu ( # Prints every iteration of the menu with te selected option highlighted
-	color_increment=1
+	local color_increment=1
 	for i in "${!options[@]}"; do
 		option="${options[$i]}"
 		((color_increment++))
@@ -35,7 +35,10 @@ function print_menu ( # Prints every iteration of the menu with te selected opti
 )
 ##
 interactive_menu() {
-	menu_position=1
+    local i menu_position=1
+    local options=()
+    local arguments arg key arrow quit_option
+	
 	##
 	declare -a options=()
 	for arg in "$@"; do # Build the array of options and search for the break switch
